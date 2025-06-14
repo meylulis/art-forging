@@ -1,5 +1,8 @@
 <?php
 
+var_dump(getenv('DB_URL'));
+exit;
+
 $url = getenv('DB_URL'); // например, mysql://user:pass@host:port/dbname
 
 // Парсим URL в компоненты
