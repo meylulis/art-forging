@@ -1,14 +1,14 @@
 <?php
 
-return [
-     'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=' . getenv('DB_HOST') . ';dbname=' . getenv('DB_NAME'),
-    'username' => getenv('DB_USER'),
-    'password' => getenv('DB_PASS'),
-    'charset' => 'utf8',
+$url = getenv('DB_URL'); // например, mysql://user:pass@host:port/dbname
 
-    // Schema cache options (for production environment)
-    //'enableSchemaCache' => true,
-    //'schemaCacheDuration' => 60,
-    //'schemaCache' => 'cache',
+// Парсим URL в компоненты
+$components = parse_url($url);
+
+return [
+    'class' => 'yii\db\Connection',
+    'dsn' => "mysql:host={$components['host']};port={$components['port']};dbname=" . ltrim($components['path'], '/'),
+    'username' => $components['user'],
+    'password' => $components['pass'],
+    'charset' => 'utf8',
 ];
